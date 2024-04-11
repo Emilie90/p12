@@ -1,0 +1,16 @@
+.linechart {
+  width: 258px;
+  background-color: #ff0000;
+  box-shadow: 0 2px 4px 0 #00000005;
+  position: relative;
+  & h2 {
+    position: absolute;
+    top: 29px;
+    left: 34px;
+    color: white;
+    opacity: 0.5;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+  }
+}

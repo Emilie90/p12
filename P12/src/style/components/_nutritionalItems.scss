@@ -1,0 +1,15 @@
+.nutrionalItem {
+  width: 258px;
+  height: 124px;
+  margin-top: 10px;
+  background-color: #fbfbfb;
+  @include flex-space-a;
+  & p {
+    color: #282d30;
+    @include font(20px, 700);
+  }
+  & span {
+    color: #74798c;
+    @include font(14px, 500);
+  }
+}

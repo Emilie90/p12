@@ -1,0 +1,14 @@
+.index {
+  width: 90%;
+  position: absolute;
+  @include flex-space-a;
+  top: 100px;
+  left: 90px;
+}
+.charts {
+  display: flex;
+  @include flex-space-a;
+}
+.item {
+  margin-left: 40px;
+}
