@@ -1,29 +1,16 @@
-// import {getUserData} from "../api/api"
-import { useEffect } from "react";
-// import {User} from "../types/types"
+import React from "react";
+
 type NameProps = {
   name?: string;
 };
 
-const Name: React.FC = ({ name }: NameProps) => {
-  // const [userName, setUserName] = useState();
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        // récupérer les données
-      } catch (error) {
-        // Gérer les erreurs ici si nécessaire
-      }
-    };
-
-    getUser();
-  }, []);
+const Name: React.FC<NameProps> = ({ name }) => {
   return (
     <div className="name">
       <h1>
         Bonjour <span>{name}</span>
       </h1>
-      <p>Félicitations ! Vous avec explosé vos objectifs hier 👏</p>
+      <p>Félicitations ! Vous avez explosé vos objectifs hier 👏</p>
     </div>
   );
 };
