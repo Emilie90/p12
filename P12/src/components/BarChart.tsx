@@ -24,7 +24,7 @@ export default function App({ data }: UserActivity) {
       barGap={5}
       width={500}
       height={300}
-      data={data} // Utilisation des données mappées
+      data={data}
       margin={{
         top: 5,
         right: 30,
