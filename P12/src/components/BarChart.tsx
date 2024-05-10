@@ -9,7 +9,7 @@ import {
 } from "recharts";
 
 type UserActivity = {
-  data: UserActivitySessions[];
+  data: UserActivitySessions[] | undefined;
 };
 
 type UserActivitySessions = {

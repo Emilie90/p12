@@ -112,10 +112,10 @@ const Dashboard = () => {
 
     if (allDataLoaded) {
       setData({
-        mainData: mainData?.data,
-        activityData: activityData?.data,
-        sessionsData: sessionsData?.data,
-        performanceData: performanceData?.data,
+        mainData: mainData,
+        activityData: activityData,
+        sessionsData: sessionsData,
+        performanceData: performanceData,
       });
     }
   }, [mainData, activityData, sessionsData, performanceData]);
@@ -125,8 +125,8 @@ const Dashboard = () => {
       <div className="index">
         <div className="left_part">
           <div className="top">
-            <Name name={data?.data.userInfos.firstName || " "} />
-            <BarChart data={data?.sessionsData} />
+            <Name name={mainData?.data.userInfos.firstName || " "} />
+            <BarChart data={activityData?.data.sessions} />
           </div>
 
           <div className="charts">
@@ -140,19 +140,19 @@ const Dashboard = () => {
             <>
               <NutritionalItems
                 name="Calories"
-                value={data.data.keyData.calorieCount}
+                value={mainData?.data.keyData.calorieCount}
               />
               <NutritionalItems
                 name="Proteines"
-                value={data.data.keyData.proteinCount}
+                value={mainData?.data.keyData.proteinCount}
               />
               <NutritionalItems
                 name="Glucides"
-                value={data.data.keyData.carbohydrateCount}
+                value={mainData?.data.keyData.carbohydrateCount}
               />
               <NutritionalItems
                 name="Lipides"
-                value={data.data.keyData.proteinCount}
+                value={mainData?.data.keyData.proteinCount}
               />
             </>
           )}

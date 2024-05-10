@@ -1,6 +1,6 @@
 type NutritionalItemsProps = {
   name: "Calories" | "Proteines" | "Glucides" | "Lipides";
-  value: number;
+  value: number | undefined;
 };
 
 const NutritionalItems = ({ name, value }: NutritionalItemsProps) => {
