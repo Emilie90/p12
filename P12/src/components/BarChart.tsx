@@ -35,13 +35,15 @@ export default function App({ data }: UserActivity) {
       <text x={30} y={36} fontSize={15} fontWeight={500} fill="#20253A">
         Activité quotidienne
       </text>
-      <CartesianGrid strokeDasharray="2 3" vertical={false} stroke="#DEDEDE" />{" "}
+      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#DEDEDE" />{" "}
       <XAxis
-        dataKey="name"
+        dataKey="day"
         tickLine={false}
-        axisLine={{ stroke: "#DEDEDE" }}
-        tickMargin={15.5}
-        tick={{ stroke: "#9B9EAC", fontSize: "14" }}
+        tick={{ fill: "#9B9EAC" }}
+        axisLine={false}
+        padding={{ left: -30, right: -30 }}
+        domain={["dataMin", "dataMax"]}
+        tickMargin={10}
       />
       <YAxis
         orientation={"right"}
@@ -72,7 +74,7 @@ export default function App({ data }: UserActivity) {
         iconSize={8}
       />
       <Bar
-        dataKey="pv"
+        dataKey="kilogram"
         fill="#020203"
         barSize={7}
         legendType={"circle"}
@@ -80,7 +82,7 @@ export default function App({ data }: UserActivity) {
         radius={[3, 3, 0, 0]}
       />
       <Bar
-        dataKey="uv"
+        dataKey="calories"
         fill="#d62d2d"
         barSize={7}
         legendType={"circle"}

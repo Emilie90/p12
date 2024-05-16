@@ -112,10 +112,10 @@ const Dashboard = () => {
 
     if (allDataLoaded) {
       setData({
-        mainData: mainData,
-        activityData: activityData,
-        sessionsData: sessionsData,
-        performanceData: performanceData,
+        mainData,
+        activityData,
+        sessionsData,
+        performanceData,
       });
     }
   }, [mainData, activityData, sessionsData, performanceData]);
