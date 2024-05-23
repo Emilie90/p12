@@ -6,7 +6,7 @@ import BarChart from "../components/BarChart";
 import Name from "../components/Name";
 import NutritionalItems from "../components/NutritionalItems";
 import RadialBarChart from "../components/RadialBarChart";
-import RadarChart from "../components/RadarChart";
+import CustomRadarChart from "../components/RadarChart"; // Mise à jour de l'importation
 
 type User = {
   mainData: UserData;
@@ -58,7 +58,8 @@ type UserData = {
       lastName: string;
       age: number;
     };
-    todayScore: number;
+    todayScore?: number; // todayScore peut être optionnel
+    score?: number; // score peut être optionnel
     keyData: {
       calorieCount: number;
       proteinCount: number;
@@ -120,6 +121,11 @@ const Dashboard = () => {
     }
   }, [mainData, activityData, sessionsData, performanceData]);
 
+  const getScore = (data: UserData | null) => {
+    if (data === null) return 0;
+    return data.data.todayScore || data.data.score || 0;
+  };
+
   return (
     <main>
       <div className="index">
@@ -130,9 +136,9 @@ const Dashboard = () => {
           </div>
 
           <div className="charts">
-            <LineChart />
-            <RadialBarChart />
-            <RadarChart />
+            <LineChart data={sessionsData?.data.sessions} />
+            <RadialBarChart data={getScore(mainData)} />
+            <CustomRadarChart data={performanceData?.data} />
           </div>
         </div>
         <div className="items">
@@ -152,7 +158,7 @@ const Dashboard = () => {
               />
               <NutritionalItems
                 name="Lipides"
-                value={mainData?.data.keyData.proteinCount}
+                value={mainData?.data.keyData.lipidCount}
               />
             </>
           )}

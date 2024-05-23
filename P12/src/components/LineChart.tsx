@@ -1,49 +1,14 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, Rectangle } from "recharts";
+import { TooltipProps as RechartsTooltipProps } from "recharts";
 
-const data = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+type UserAverage = {
+  data: UserAverageSessions[] | undefined;
+};
+
+type UserAverageSessions = {
+  day: number;
+  sessionLength: number;
+};
 
 type Point = { x: number };
 
@@ -52,12 +17,41 @@ type SimpleLineCursorProps = {
 };
 
 const SimpleLineCursor = ({ points }: SimpleLineCursorProps) => {
+  if (points.length === 0) return null;
   const { x } = points[0];
 
   return <Rectangle fill="#000" opacity={0.1} width={265} height={265} x={x} />;
 };
 
-export default function App() {
+// Mappage des jours de la semaine
+const dayMap = ["L", "M", "M", "J", "V", "S", "D"];
+
+const formatDay = (day: number) => dayMap[day - 1]; // Convertir le numéro du jour en lettre
+
+// Fonction pour formater le contenu du tooltip
+const renderTooltipContent = ({
+  active,
+  payload,
+}: RechartsTooltipProps<number, string>) => {
+  if (active && payload && payload.length) {
+    return (
+      <div
+        className="custom-tooltip"
+        style={{
+          backgroundColor: "#fff",
+          padding: "5px",
+          border: "1px solid #ccc",
+        }}
+      >
+        <p>{`${payload[0].value} min`}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+export default function App({ data }: UserAverage) {
   return (
     <div className="linechart">
       <h2>
@@ -76,23 +70,25 @@ export default function App() {
         }}
       >
         <XAxis
-          dataKey="name"
+          dataKey="day" // Utilisation de "day" pour mapper les numéros de jour
           tickLine={false}
           axisLine={false}
           opacity={0.5}
           fontSize={12}
           fontWeight={500}
           tick={{ fill: "#FFFFFF", opacity: 0.5 }}
+          tickFormatter={formatDay} // Utilisation de la fonction de formatage
         />
         <YAxis hide={true} />
         <Tooltip
           contentStyle={{ border: "none", backgroundColor: "white" }}
           wrapperStyle={{ outline: "none" }}
           cursor={<SimpleLineCursor points={[]} />}
+          content={renderTooltipContent} // Utilisation de la fonction de contenu personnalisé
         />
         <Line
           type="monotone"
-          dataKey="pv"
+          dataKey="sessionLength"
           strokeWidth={2}
           stroke="#FFFFFF"
           dot={false}

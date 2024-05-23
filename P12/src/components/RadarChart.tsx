@@ -6,52 +6,42 @@ import {
   RadarChart,
 } from "recharts";
 
-const data = [
-  {
-    subject: "Math",
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: "Chinese",
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "English",
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "Geography",
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: "Physics",
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-  {
-    subject: "History",
-    A: 65,
-    B: 85,
-    fullMark: 150,
-  },
-];
+type PerformanceData = {
+  value: number;
+  kind: number;
+};
 
-export default function App() {
+type UserPerformance = {
+  data:
+    | {
+        kind: { [key: number]: string };
+        data: PerformanceData[];
+      }
+    | undefined;
+};
+
+const transformPerformanceData = (performance: UserPerformance["data"]) => {
+  if (!performance) return [];
+  return performance.data.map((item) => ({
+    value: item.value,
+    kind: performance.kind[item.kind],
+  }));
+};
+
+const CustomRadarChart = ({ data }: UserPerformance) => {
+  const transformedData = transformPerformanceData(data);
+
   return (
     <div className="radarChart">
-      <RadarChart width={258} height={263} outerRadius={80} data={data}>
+      <RadarChart
+        width={258}
+        height={263}
+        outerRadius={80}
+        data={transformedData}
+      >
         <PolarGrid radialLines={false} stroke="white" />
         <PolarAngleAxis
-          dataKey="subject"
+          dataKey="kind"
           fontSize={12}
           fontWeight={500}
           stroke="white"
@@ -63,8 +53,15 @@ export default function App() {
           tick={false}
           axisLine={false}
         />
-        <Radar name="Mike" dataKey="A" fill="#FF0101" fillOpacity={0.7} />
+        <Radar
+          name="Performance"
+          dataKey="value"
+          fill="#FF0101"
+          fillOpacity={0.7}
+        />
       </RadarChart>
     </div>
   );
-}
+};
+
+export default CustomRadarChart;
