@@ -1,33 +1,13 @@
-import LineChart from "../components/LineChart";
-import BarChart from "../components/BarChart";
-import Name from "../components/Name";
-import NutritionalItems from "../components/NutritionalItems";
-import RadialBarChart from "../components/RadialBarChart";
-import RadarChart from "../components/RadarChart";
+import Header from "../components/Header";
+import SideBar from "../components/SideBar";
+import Dashboard from "./dashboard";
 
 const Index = () => {
   return (
     <main>
-      <div className="index">
-        <div className="left_part">
-          <div className="top">
-            <Name />
-            <BarChart />
-          </div>
-
-          <div className="charts">
-            <LineChart />
-            <RadialBarChart />
-            <RadarChart />
-          </div>
-        </div>
-        <div className="items">
-          <NutritionalItems name="Calories" value={19} />
-          <NutritionalItems name="Proteines" value={19} />
-          <NutritionalItems name="Glucides" value={19} />
-          <NutritionalItems name="Lipides" value={19} />
-        </div>
-      </div>
+      <Header />
+      <SideBar />
+      <Dashboard />
     </main>
   );
 };

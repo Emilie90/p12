@@ -1,7 +1,11 @@
 @import "./settings";
 @import "./components/_header";
+@import "./components/_name";
 @import "./components/_sideBar";
 @import "./components/_index";
 @import "./components/_nutritionalItems";
 @import "./components//_linechart";
-@import "./components/radarChart";
+@import "./components/_radarChart";
+@import "./components/_barChart";
+
+@import "./pages/home";

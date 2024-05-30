@@ -62,12 +62,7 @@ export default function App({ data }: UserAverage) {
         width={258}
         height={263}
         data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
+        margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
       >
         <XAxis
           dataKey="day" // Utilisation de "day" pour mapper les numéros de jour
@@ -78,6 +73,7 @@ export default function App({ data }: UserAverage) {
           fontWeight={500}
           tick={{ fill: "#FFFFFF", opacity: 0.5 }}
           tickFormatter={formatDay} // Utilisation de la fonction de formatage
+          padding={{ left: 0, right: 0 }} // Ajuster le padding pour l'axe X
         />
         <YAxis hide={true} />
         <Tooltip

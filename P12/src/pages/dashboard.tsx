@@ -137,8 +137,9 @@ const Dashboard = () => {
 
           <div className="charts">
             <LineChart data={sessionsData?.data.sessions} />
-            <RadialBarChart data={getScore(mainData)} />
+
             <CustomRadarChart data={performanceData?.data} />
+            <RadialBarChart data={getScore(mainData)} />
           </div>
         </div>
         <div className="items">

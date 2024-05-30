@@ -1,0 +1,13 @@
+.home {
+  width: 40%;
+  border-radius: 30px;
+  padding: 0 30px 30px 30px;
+  background-color: #f7f7f7;
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  & .name {
+    margin-top: 30px;
+    margin-bottom: 20px;
+  }
+}
