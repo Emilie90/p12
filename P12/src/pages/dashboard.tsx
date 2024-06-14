@@ -132,6 +132,7 @@ const Dashboard = () => {
         <div className="left_part">
           <div className="top">
             <Name name={mainData?.data.userInfos.firstName || " "} />
+
             <BarChart data={activityData?.data.sessions} />
           </div>
 
