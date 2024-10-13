@@ -7,4 +7,7 @@
   -o-border-radius: 5px;
   padding: 10px 0 0 10px;
   margin-bottom: 40px;
+  @media screen and (max-width: $breakpoint-desktop) {
+    height: 200px;
+  }
 }

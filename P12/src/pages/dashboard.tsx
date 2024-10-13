@@ -145,7 +145,7 @@ const Dashboard = () => {
         </div>
         <div className="items">
           {data && (
-            <>
+            <div className="nutri_items">
               <NutritionalItems
                 name="Calories"
                 value={mainData?.data.keyData.calorieCount}
@@ -162,7 +162,7 @@ const Dashboard = () => {
                 name="Lipides"
                 value={mainData?.data.keyData.lipidCount}
               />
-            </>
+            </div>
           )}
         </div>
       </div>

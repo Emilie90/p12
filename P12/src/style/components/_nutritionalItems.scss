@@ -3,6 +3,10 @@
   height: 124px;
   margin-top: 10px;
   background-color: #fbfbfb;
+  @media screen and (max-width: $breakpoint-desktop) {
+    height: 100px;
+  }
+
   @include flex-space-a;
   & p {
     color: #282d30;

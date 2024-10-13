@@ -5,6 +5,7 @@ $color1: #020203;
 $color2: #d62d2d;
 $white: #fff;
 $w-min: 375px;
+$breakpoint-desktop: 1184px;
 
 @mixin flex-space-a {
   display: flex;

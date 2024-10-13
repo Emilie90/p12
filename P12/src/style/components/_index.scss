@@ -1,15 +1,27 @@
 .index {
-  width: 90%;
+  max-width: 100%;
   position: absolute;
   @include flex-space-a;
   top: 100px;
   left: 90px;
   padding: 10px 0 0 50px;
+  @media screen and (max-width: $breakpoint-desktop) {
+    display: flex;
+    flex-direction: column;
+  }
 }
+
 .charts {
   display: flex;
   @include flex-space-a;
 }
 .item {
   margin-left: 40px;
+}
+
+.nutri_items {
+  @media screen and (max-width: $breakpoint-desktop) {
+    display: flex;
+    flex-direction: wrap;
+  }
 }

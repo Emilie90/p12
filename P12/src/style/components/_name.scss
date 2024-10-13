@@ -1,6 +1,9 @@
 .name {
   padding-bottom: 30px;
   line-height: 2.5;
+  @media screen and (max-width: $breakpoint-desktop) {
+    line-height: 1.7;
+  }
   & span {
     color: #ff0000;
   }

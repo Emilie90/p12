@@ -1,5 +1,5 @@
 .linechart {
-  width: 258px;
+  // width: 258px;
   background-color: #ff0000;
   box-shadow: 0 2px 4px 0 #00000005;
   position: relative;
@@ -9,6 +9,7 @@
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+
   & h2 {
     position: absolute;
     top: 25px;
