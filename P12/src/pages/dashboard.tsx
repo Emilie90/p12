@@ -6,71 +6,11 @@ import BarChart from "../components/BarChart";
 import Name from "../components/Name";
 import NutritionalItems from "../components/NutritionalItems";
 import RadialBarChart from "../components/RadialBarChart";
-import CustomRadarChart from "../components/RadarChart"; // Mise à jour de l'importation
-
-type User = {
-  mainData: UserData;
-  activityData: UserActivity;
-  sessionsData: UserAverageSessions;
-  performanceData: UserPerformance;
-};
-
-type UserActivity = {
-  data: {
-    userId: number;
-    sessions: {
-      day: string;
-      kilogram: number;
-      calories: number;
-    }[];
-  }[];
-};
-
-type UserAverageSessions = {
-  data: {
-    userId: number;
-    sessions: Array<{
-      day: number;
-      sessionLength: number;
-    }>;
-  };
-};
-
-type UserPerformance = {
-  data: {
-    userId: number;
-    kind: {
-      [key: number]: string;
-    };
-    data: Array<{
-      value: number;
-      kind: number;
-    }>;
-  };
-};
-
-type UserData = {
-  data: {
-    id: number;
-
-    userInfos: {
-      firstName: string;
-      lastName: string;
-      age: number;
-    };
-    todayScore?: number; // todayScore peut être optionnel
-    score?: number; // score peut être optionnel
-    keyData: {
-      calorieCount: number;
-      proteinCount: number;
-      carbohydrateCount: number;
-      lipidCount: number;
-    };
-  };
-};
+import CustomRadarChart from "../components/RadarChart";
+import UserModel from "../models/UserModel";
 
 const Dashboard = () => {
-  const [data, setData] = useState<User | null>(null);
+  const [user, setUser] = useState<InstanceType<typeof UserModel> | null>(null); // Utilisation de InstanceType<typeof UserModel>
   const [, setApiError] = useState(false);
   const { id: stringId } = useParams();
   const userId = Number(stringId) || 0;
@@ -78,33 +18,32 @@ const Dashboard = () => {
   const { data: mainData, error: mainError } = useFetch(
     `http://localhost:3000/user/${userId}`,
     userId
-  ) as { data: UserData | null; error: Error | null };
+  );
 
   const { data: activityData, error: activityError } = useFetch(
     `http://localhost:3000/user/${userId}/activity`,
     userId
-  ) as { data: UserActivity | null; error: Error | null };
+  );
 
   const { data: sessionsData, error: sessionsError } = useFetch(
     `http://localhost:3000/user/${userId}/average-sessions`,
     userId
-  ) as { data: UserAverageSessions | null; error: Error | null };
+  );
 
   const { data: performanceData, error: performanceError } = useFetch(
     `http://localhost:3000/user/${userId}/performance`,
     userId
-  ) as { data: UserPerformance | null; error: Error | null };
+  );
 
   useEffect(() => {
-    if (mainError) {
+    if (mainError || activityError || sessionsError || performanceError) {
       setApiError(true);
     } else {
       setApiError(false);
     }
-  }, [mainError, performanceError, sessionsError, activityError]);
+  }, [mainError, activityError, sessionsError, performanceError]);
 
   useEffect(() => {
-    // On s'assure que toutes les données sont chargées avant de créer l'instance de User
     const allDataLoaded =
       mainData?.data &&
       activityData?.data &&
@@ -112,18 +51,14 @@ const Dashboard = () => {
       performanceData?.data;
 
     if (allDataLoaded) {
-      setData({
-        mainData,
-        activityData,
-        sessionsData,
-        performanceData,
-      });
+      const formattedUserData = new UserModel(mainData); // Utilisation de UserModel pour formater les données principales
+      setUser(formattedUserData);
     }
   }, [mainData, activityData, sessionsData, performanceData]);
 
-  const getScore = (data: UserData | null) => {
-    if (data === null) return 0;
-    return data.data.todayScore || data.data.score || 0;
+  const getScore = (user: InstanceType<typeof UserModel> | null) => {
+    if (user === null) return 0;
+    return user.score;
   };
 
   return (
@@ -131,37 +66,27 @@ const Dashboard = () => {
       <div className="index">
         <div className="left_part">
           <div className="top">
-            <Name name={mainData?.data.userInfos.firstName || " "} />
-
+            <Name name={user?.firstName || " "} />
             <BarChart data={activityData?.data.sessions} />
           </div>
 
           <div className="charts">
             <LineChart data={sessionsData?.data.sessions} />
-
             <CustomRadarChart data={performanceData?.data} />
-            <RadialBarChart data={getScore(mainData)} />
+            <RadialBarChart data={getScore(user)} />
           </div>
         </div>
+
         <div className="items">
-          {data && (
+          {user && (
             <div className="nutri_items">
-              <NutritionalItems
-                name="Calories"
-                value={mainData?.data.keyData.calorieCount}
-              />
+              <NutritionalItems name="Calories" value={user.keyData.calories} />
               <NutritionalItems
                 name="Proteines"
-                value={mainData?.data.keyData.proteinCount}
+                value={user.keyData.proteins}
               />
-              <NutritionalItems
-                name="Glucides"
-                value={mainData?.data.keyData.carbohydrateCount}
-              />
-              <NutritionalItems
-                name="Lipides"
-                value={mainData?.data.keyData.lipidCount}
-              />
+              <NutritionalItems name="Glucides" value={user.keyData.carbs} />
+              <NutritionalItems name="Lipides" value={user.keyData.fats} />
             </div>
           )}
         </div>

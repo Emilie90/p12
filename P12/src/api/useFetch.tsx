@@ -15,7 +15,7 @@ type MockedData =
   | typeof USER_PERFORMANCE;
 
 // Définir le type de données pour l'état
-type UserData = MockedData | null;
+export type UserData = MockedData | null;
 
 export function useFetch(url: string, userId: number) {
   const [data, setData] = useState<UserData>(null);
